@@ -1,0 +1,17 @@
+﻿<Window x:Class="GameToolsAndPipelines.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GameToolsAndPipelines"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="900" Width="1600">
+    <Grid x:Name="GitHub">
+        <Label x:Name="Title" Content="GitHub" HorizontalAlignment="Center" Margin="0,58,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" FontSize="250" FontWeight="Bold" Height="272" Width="766"/>
+        <Button x:Name="bAdd" Content="Add" HorizontalAlignment="Left" Margin="161,397,0,0" VerticalAlignment="Top" Background="#FFAE9AE6" FontSize="150" VerticalContentAlignment="Center"/>
+        <Button x:Name="bCommit" Content="Commit" HorizontalAlignment="Center" Margin="0,625,0,0" VerticalAlignment="Top" Background="#FFAE9AE6" FontSize="150" VerticalContentAlignment="Center"/>
+        <Button x:Name="bPush" Content="Push" HorizontalAlignment="Center" Margin="0,397,0,0" VerticalAlignment="Top" Background="#FFAE9AE6" FontSize="150" VerticalContentAlignment="Center"/>
+        <Button x:Name="bFetch" Content="Fetch" HorizontalAlignment="Left" Margin="1145,397,0,0" VerticalAlignment="Top" Background="#FFAE9AE6" FontSize="150" VerticalContentAlignment="Center"/>
+
+    </Grid>
+</Window>
