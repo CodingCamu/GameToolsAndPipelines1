@@ -1,82 +1,100 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Management.Automation;
+using Microsoft.Win32;
 
 namespace GameToolsAndPipelines
 {
     public partial class MainWindow : Window
     {
+        // Added InputText property
+        public string InputText { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        // Event handler for Add button
-        private void bAdd_Click(object sender, RoutedEventArgs e)
+        private async void ExecuteGitCommand(string command)
         {
-            // Execute 'git add' command for the specified folder or file
-            string folderOrFile = ""; // Get the folder or file path from your UI elements
-            ExecuteGitCommand($"add \"{folderOrFile}\"");
-        }
-
-        // Event handler for Commit button
-        private void bCommit_Click(object sender, RoutedEventArgs e)
-        {
-            // Get message and author information from your UI elements
-            string message = ""; // Get the commit message from your UI elements
-            string authorInfo = ""; // Get the author information from your UI elements
-            ExecuteGitCommand($"commit -m \"{message}\" --author=\"{authorInfo}\"");
-        }
-
-        // Event handler for Push button
-        private void bPush_Click(object sender, RoutedEventArgs e)
-        {
-            // Execute 'git push' command
-            ExecuteGitCommand("push");
-        }
-
-        // Event handler for Fetch button
-        private void bFetch_Click(object sender, RoutedEventArgs e)
-        {
-            // Execute 'git fetch' command
-            ExecuteGitCommand("fetch");
-        }
-
-        // Method to execute git commands
-        // Method to execute git commands
-        private void ExecuteGitCommand(string command)
-        {
-            string currentDirectory = Directory.GetCurrentDirectory();
-            string gitExecutable = "D:\\Code\\GameToolsAndPipelines"; // Assumes 'git' is in the system PATH
-
-            Process process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.UseShellExecute = false;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.FileName = gitExecutable;
-            startInfo.Arguments = command;
-            startInfo.WorkingDirectory = currentDirectory;
-
-            process.StartInfo = startInfo;
-            process.Start();
-            string output = process.StandardOutput.ReadToEnd();
-            Console.WriteLine(output);
-            process.WaitForExit();
-
-           
-            if (process.ExitCode != 0)
+            try
             {
-                string gitPath = @"C:\Program Files\Git\cmd\git.exe"; 
-                startInfo.FileName = gitPath;
+                Process process = new Process();
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.UseShellExecute = false;
+                startInfo.RedirectStandardInput = true;
+                startInfo.RedirectStandardOutput = true;
+                startInfo.FileName = "cmd.exe";
+                startInfo.CreateNoWindow = true;
+
                 process.StartInfo = startInfo;
                 process.Start();
-                output = process.StandardOutput.ReadToEnd();
+
+                StreamWriter streamWriter = process.StandardInput;
+                streamWriter.WriteLine(command);
+                streamWriter.WriteLine("exit");
+                streamWriter.Close();
+
+                string output = await process.StandardOutput.ReadToEndAsync();
                 Console.WriteLine(output);
+
                 process.WaitForExit();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error executing Git command: {ex.Message}");
             }
         }
 
+        private void bAdd_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "Select file or folder to add";
+            openFileDialog.CheckFileExists = true;
+            openFileDialog.CheckPathExists = true;
+            openFileDialog.Multiselect = true;
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string files = string.Join(" ", openFileDialog.FileNames);
+                ExecuteGitCommand($"cd /d \"{Directory.GetCurrentDirectory()}\" && git add {files}");
+            }
+        }
+
+        private void bCommit_Click(object sender, RoutedEventArgs e)
+        {
+            
+            string commitMessage = InputTextBox.Text;
+
+            if (!string.IsNullOrWhiteSpace(commitMessage))
+            {
+                ExecuteGitCommand($"cd /d \"{Directory.GetCurrentDirectory()}\" && git commit -m \"{commitMessage}\"");
+                InputTextBox.Text = "Done";
+            }
+
+
+        }
+
+        private void bPush_Click(object sender, RoutedEventArgs e)
+        {
+            ExecuteGitCommand($"cd /d \"{Directory.GetCurrentDirectory()}\" && git push");
+        }
+        private void InputTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            InputTextBox.Text = "";
+        }
+
+        private void bFetch_Click(object sender, RoutedEventArgs e)
+        {
+            ExecuteGitCommand($"cd /d \"{Directory.GetCurrentDirectory()}\" && git fetch");
+        }
+
+        private void bClose_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

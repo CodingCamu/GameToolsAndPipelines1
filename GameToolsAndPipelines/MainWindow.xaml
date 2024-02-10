@@ -8,10 +8,13 @@
         Title="MainWindow" Height="900" Width="1600">
     <Grid x:Name="GitHub">
         <Label x:Name="Title" Content="GitHub" HorizontalAlignment="Center" Margin="0,58,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" FontSize="250" FontWeight="Bold" Height="272" Width="766"/>
-        <Button x:Name="bAdd" Content="Add" HorizontalAlignment="Left" Margin="161,397,0,0" VerticalAlignment="Top" Background="#FFAE9AE6" FontSize="150" VerticalContentAlignment="Center"/>
-        <Button x:Name="bCommit" Content="Commit" HorizontalAlignment="Center" Margin="0,625,0,0" VerticalAlignment="Top" Background="#FFAE9AE6" FontSize="150" VerticalContentAlignment="Center"/>
-        <Button x:Name="bPush" Content="Push" HorizontalAlignment="Center" Margin="0,397,0,0" VerticalAlignment="Top" Background="#FFAE9AE6" FontSize="150" VerticalContentAlignment="Center"/>
-        <Button x:Name="bFetch" Content="Fetch" HorizontalAlignment="Left" Margin="1145,397,0,0" VerticalAlignment="Top" Background="#FFAE9AE6" FontSize="150" VerticalContentAlignment="Center"/>
+        <Button x:Name="bAdd" Content="Add" HorizontalAlignment="Left" Margin="231,330,0,0" VerticalAlignment="Top" Background="#FFAE9AE6" FontSize="100" VerticalContentAlignment="Center" Click="bAdd_Click"/>
+        <Button x:Name="bCommit" Content="Commit" HorizontalAlignment="Left" Margin="147,525,0,0" VerticalAlignment="Top" Background="#FFAE9AE6" FontSize="100" VerticalContentAlignment="Center" Click="bCommit_Click"/>
+        <Button x:Name="bPush" Content="Push" HorizontalAlignment="Left" Margin="681,332,0,0" VerticalAlignment="Top" Background="#FFAE9AE6" FontSize="100" VerticalContentAlignment="Center" Click="bPush_Click"/>
+        <Button x:Name="bFetch" Content="Fetch" HorizontalAlignment="Left" Margin="1220,330,0,0" VerticalAlignment="Top" Background="#FFAE9AE6" FontSize="100" VerticalContentAlignment="Center" Click="bFetch_Click"/>
+        <TextBox x:Name="InputTextBox" HorizontalAlignment="Left" Margin="646,552,0,0" TextWrapping="Wrap" Text="Write here the commit message, then press the button" VerticalAlignment="Top" Width="695" FontSize="25" Height="84" GotFocus="InputTextBox_GotFocus"/>
+        <Button x:Name="bClose" Content="Close" HorizontalAlignment="Left" Margin="1369,743,0,0" VerticalAlignment="Top" Height="73" Width="187" FontSize="50" Background="#FFB13E3E" Click="bClose_Click"/>
+
 
     </Grid>
 </Window>
